@@ -26,12 +26,20 @@ class CNNModel(nn.Module):
         self.x_shape = (5, 5, n_state)
         self.conv1 = nn.Conv2d(n_state, 8, kernel_size=2, stride=1)
         self.conv2 = nn.Conv2d(8, 16, kernel_size=2, stride=1)
-        self.fc = nn.Linear(16*3*3, n_action)
+        self.fc1 = nn.Linear(16*3*3, 16*3*3//2)
+        self.fc2 = nn.Linear(16*3*3//2, n_action)
         self.activation = nn.ReLU()
 
     def forward(self, x):
+        if x.dim()==3:
+            x = x.unsqueeze(0)
         x = x.permute(0, 3, 1, 2)
-        ### Todo 19
-        raise NotImplementedError
 
+        x = self.activation(self.conv1(x))
+        x = self.activation(self.conv2(x))
+        x = x.reshape(-1,16*3*3)
+        x = self.activation(self.fc1(x))
+        x = self.fc2(x)
+
+        return x
 

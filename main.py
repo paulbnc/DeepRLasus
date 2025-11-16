@@ -61,7 +61,7 @@ if __name__ == '__main__':
     # Environment parameters
     parser.add_argument('--temperature', type=float, default=0.3, help='Temperature when generating the map')
     parser.add_argument('--grid_size', type=int, default=13, help='Size of the grid') 
-    #### Todo 3
+    parser.add_argument('--n_state', type=int, default=2, help='Number of states') 
 
     # Agent parameters
     parser.add_argument('--agent', type=str, default='straight', choices=['straight', 'random', 'fc', 'cnn'], help='Type of agent to use')

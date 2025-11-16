@@ -93,7 +93,7 @@ class DQN(Agent):
         self.discount = 0.99
 
         # Number of state
-        self.n_state = 2 + args.explore*1
+        self.n_state = args.n_state + args.explore*(args.n_state//2)
         self.grid_size = args.grid_size
         
         # Memory
@@ -141,7 +141,7 @@ class DQN(Agent):
         # HINT: Clip the target to avoid exploiding gradients.. -- clipping is a bit tighter
         target_q = torch.clamp(target_q, -3, 3)
         
-        q_pred = self.model(n_s_)
+        q_pred = self.model(s_)
         loss = self.loss(q_pred, target_q)
 
         return loss

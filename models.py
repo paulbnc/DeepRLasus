@@ -33,7 +33,7 @@ class CNNModel(nn.Module):
         if x.dim()==3:
             x = x.unsqueeze(0)
         x = x.permute(0, 3, 1, 2)
-
+        print(x.size())
         x = self.activation(self.conv1(x))
         x = self.activation(self.conv2(x))
         x = x.reshape(-1,16*3*3)

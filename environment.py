@@ -15,7 +15,7 @@ class Environment(nn.Module):
         self.temperature = args.temperature
         self.device = device
         self.args = args
-        self.back_penalization = 0.2
+        self.back_penalization = 0.7
 
         # board on which one plays
         self.board = torch.zeros((grid_size,grid_size), device=device)
@@ -111,7 +111,7 @@ class Environment(nn.Module):
         reward = self.board[self.x, self.y].item() 
 
         if self.args.explore and self.training:
-            reward -= self.back_penalization
+            reward -= self.back_penalization*self.malus_position[self.x, self.y]
 
         self.board[self.x, self.y] = 0
         self.position[self.x, self.y] = 1 # Update the visited position state
